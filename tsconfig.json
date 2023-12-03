@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "moduleResolution": "node",
+
+    "outDir": "lib",
+    "sourceMap": true,
+    "declaration": true,
+
+    "newLine": "LF",
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "stripInternal": true
+  },
+  "include": ["packages/*/src/**/*.ts"],
+  "exclude": ["node_modules"]
+}
