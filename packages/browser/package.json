@@ -1,6 +1,6 @@
 {
   "name": "@rmbg/browser",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "lib/index.js",
   "files": [
     "dist",
@@ -18,8 +18,8 @@
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react-swc": "^3.5.0",
-    "@rmbg/model-general": "^1.0.0",
-    "@rmbg/model-silueta": "^1.0.0",
+    "@rmbg/model-general": "^0.0.1",
+    "@rmbg/model-silueta": "^0.0.1",
     "npm-run-all": "^4.1.5",
     "onnxruntime-web": "1.16.2",
     "rimraf": "^5.0.1",
