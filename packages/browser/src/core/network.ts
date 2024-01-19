@@ -95,9 +95,12 @@ export async function loadFile(
 
 export async function loadModel(
   model: RMBGModel,
-  abortController?: AbortController,
-  onProgress?: (progress: number) => void
+  options?: {
+    abortController?: AbortController
+    onProgress?: (progress: number) => void
+  }
 ): Promise<Blob> {
+  const { abortController, onProgress } = options ?? {}
   const file = await loadFile(
     model.name,
     model.files.map((file) => model.publicPath + file),
@@ -111,9 +114,12 @@ export async function loadModel(
 
 export const loadWASM = async (
   { publicPath = defaultONNXPublicPath, wasms = defaultONNXWasms }: RMBGONNX,
-  abortController?: AbortController,
-  onProgress?: (progress: number) => void
+  options?: {
+    abortController?: AbortController
+    onProgress?: (progress: number) => void
+  }
 ): Promise<Array<[string, Blob]>> => {
+  const { abortController, onProgress } = options ?? {}
   const loaded: number[] = Array(wasms.length)
   const totalSize = wasms.reduce((rcc, item) => rcc + item.size, 0)
   const result = await Promise.all(

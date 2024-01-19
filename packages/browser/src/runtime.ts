@@ -5,7 +5,18 @@ window.addEventListener('message', (event) => {
     const { name, detail } = event.data
     if (name === 'rmbg:process') {
       const { image, options } = detail
-      rmbg(image, options)
+      rmbg(image, {
+        onProgress(progress) {
+          window.parent.postMessage(
+            {
+              name: 'rmbg:progress',
+              detail: progress
+            },
+            '*'
+          )
+        },
+        ...options
+      })
         .then((data) => {
           window.parent.postMessage(
             {

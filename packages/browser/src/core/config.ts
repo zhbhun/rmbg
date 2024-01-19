@@ -14,14 +14,17 @@ export interface RMBGModel {
   resolution: number
   size: number
 }
+
+export interface RMBGONNXWasm {
+  name: string
+  files: string[]
+  mime: string
+  size: number
+}
+
 export interface RMBGONNX {
   publicPath?: string
-  wasms?: Array<{
-    name: string
-    files: string[]
-    mime: string
-    size: number
-  }>
+  wasms?: RMBGONNXWasm[]
 }
 
 export interface RMBGOptions {
@@ -30,7 +33,8 @@ export interface RMBGOptions {
   onnx?: RMBGONNX
   /** ouout image's max resolution */
   maxResolution?: number
-  /** process progress callback */
+  abortController?: AbortController
+  /** progress callback */
   onProgress?: (progress: number) => void
 }
 

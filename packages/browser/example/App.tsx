@@ -29,17 +29,17 @@ function App() {
     }
     if (model && file) {
       log(`>> 0 ${performance.now()}`)
-      rmbg(
-        URL.createObjectURL(file),
-        {
-          model,
-          onnx: {
-            publicPath: '/node_modules/onnxruntime-web/dist/'
-          }
+      rmbg(URL.createObjectURL(file), {
+        model,
+        onnx: {
+          publicPath: '/node_modules/onnxruntime-web/dist/'
         },
-        // '/src/runtime.ts'
-        '/dist/rmbg-runtime.iife.js'
-      )
+        // runtime: '/dist/rmbg-runtime.iife.js',
+        runtime: '/src/runtime.ts',
+        onProgress(progress) {
+          console.log(`>> ${progress}`)
+        }
+      })
         .then((result) => {
           log(`>>1 ${performance.now()} ${URL.createObjectURL(result)}`)
         })

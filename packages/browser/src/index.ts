@@ -2,8 +2,13 @@ import { type RMBGOptions } from './core/config'
 
 async function rmbg(
   image: string,
-  options: RMBGOptions,
-  runtime: string
+  {
+    runtime,
+    onProgress,
+    ...options
+  }: Omit<RMBGOptions, 'onDownload' | 'onProcess'> & {
+    runtime: string
+  }
 ): Promise<Blob> {
   return new Promise<Blob>((resolve) => {
     const iframe = document.createElement('iframe')
@@ -12,6 +17,7 @@ async function rmbg(
     iframe.width = '0'
     iframe.height = '0'
     document.body.appendChild(iframe)
+
     function destroy() {
       window.removeEventListener('message', handleMessage)
       iframe.removeEventListener('load', handleLoad)
@@ -19,6 +25,7 @@ async function rmbg(
       iframe.contentWindow?.location?.reload()
       iframe.remove()
     }
+
     function handleMessage(event: MessageEvent) {
       if (event.source === iframe.contentWindow) {
         const { name, detail } = event.data
@@ -27,6 +34,8 @@ async function rmbg(
           destroy()
         } else if (name === 'rmbg:error') {
           destroy()
+        } else if (name === 'rmbg:progress') {
+          onProgress?.(detail)
         }
       }
     }
