@@ -1,5 +1,8 @@
 {
   "name": "@rmbg/model-general",
   "version": "0.0.1",
-  "description": ""
+  "description": "",
+  "publishConfig": {
+    "access": "public"
+  }
 }
