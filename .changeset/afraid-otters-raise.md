@@ -1,5 +1,0 @@
----
-'@rmbg/browser': patch
----
-
-initiate
