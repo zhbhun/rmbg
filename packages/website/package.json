@@ -17,18 +17,24 @@
   "dependencies": {
     "@docusaurus/core": "3.0.1",
     "@docusaurus/preset-classic": "3.0.1",
+    "@material-design-icons/svg": "^0.14.13",
     "@mdx-js/react": "^3.0.0",
     "@rmbg/browser": "^0.0.1",
     "@rmbg/model-general": "^0.0.1",
     "clsx": "^2.0.0",
     "prism-react-renderer": "^2.3.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-spinners": "^0.13.8"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.0.1",
     "@docusaurus/tsconfig": "3.0.1",
     "@docusaurus/types": "3.0.1",
+    "autoprefixer": "^10.4.17",
+    "onnxruntime-web": "1.16.2",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1",
     "typescript": "~5.2.2"
   },
   "browserslist": {

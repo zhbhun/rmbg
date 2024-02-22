@@ -1,43 +1,53 @@
-import clsx from 'clsx';
-import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import Layout from '@theme/Layout';
-import HomepageFeatures from '@site/src/components/HomepageFeatures';
-import Heading from '@theme/Heading';
+import Link from '@docusaurus/Link'
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
+import Layout from '@theme/Layout'
+import HomepageFeatures from '@site/src/components/HomepageFeatures'
+import Heading from '@theme/Heading'
 
-import styles from './index.module.css';
+import styles from './index.module.css'
 
 function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext()
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <Heading as="h1" className="hero__title">
-          {siteConfig.title}
-        </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
-          </Link>
+    <header className="bg-[#fef8e8]">
+      <div className="container flex flex-col justify-between items-center py-8 md:flex-row">
+        <div className="py-8 flex flex-col items-center md:flex-[1] md:min-w-[300px] md:items-start">
+          <Heading as="h1" className="mb-4 text-4xl text-center font-semibold uppercase md:text-left">
+            {siteConfig.title}
+          </Heading>
+          <p className="mb-4 text-sm text-[#666] lg:text-xl">{siteConfig.tagline}</p>
+          <div>
+            <Link
+              className="button button--primary button--lg"
+              to="/playground"
+            >
+              Get started
+            </Link>
+          </div>
+        </div>
+        <div className="md:flex-[2]">
+          <img
+            className="max-w-full"
+            src={require('@site/static/img/hero.png').default}
+          />
         </div>
       </div>
     </header>
-  );
+  )
 }
 
 export default function Home(): JSX.Element {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext()
   return (
     <Layout
+      wrapperClassName={styles.layout}
       title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      description="Description will go into a meta tag in <head />"
+    >
       <HomepageHeader />
       <main>
         <HomepageFeatures />
       </main>
     </Layout>
-  );
+  )
 }

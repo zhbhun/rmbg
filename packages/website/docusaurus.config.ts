@@ -1,10 +1,10 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
-import type * as Preset from '@docusaurus/preset-classic';
+import { themes as prismThemes } from 'prism-react-renderer'
+import type { Config } from '@docusaurus/types'
+import type * as Preset from '@docusaurus/preset-classic'
 
 const config: Config = {
-  title: 'RMBG',
-  tagline: 'Remove Image Background',
+  title: 'Background Remover',
+  tagline: 'Automatically and zero cost.',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -15,8 +15,8 @@ const config: Config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'zhbhun', // Usually your GitHub org/user name.
-  projectName: 'rmbg', // Usually your repo name.
+  // organizationName: 'zhbhun', // Usually your GitHub org/user name.
+  // projectName: 'rmbg', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -26,8 +26,10 @@ const config: Config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en']
   },
+
+  staticDirectories: ['static', '.'],
 
   presets: [
     [
@@ -38,20 +40,24 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/'
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/'
         },
         theme: {
-          customCss: './src/css/custom.css',
-        },
-      } satisfies Preset.Options,
-    ],
+          customCss: './src/css/custom.css'
+        }
+      } satisfies Preset.Options
+    ]
+  ],
+
+  stylesheets: [
+    'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'
   ],
 
   themeConfig: {
@@ -61,22 +67,22 @@ const config: Config = {
       title: 'RMBG',
       logo: {
         alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        src: 'img/logo.png'
       },
       items: [
         {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Tutorial'
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        { to: '/blog', label: 'Blog', position: 'left' },
         {
           href: 'https://github.com/facebook/docusaurus',
           label: 'GitHub',
-          position: 'right',
-        },
-      ],
+          position: 'right'
+        }
+      ]
     },
     footer: {
       style: 'dark',
@@ -86,48 +92,58 @@ const config: Config = {
           items: [
             {
               label: 'Tutorial',
-              to: '/docs/intro',
-            },
-          ],
+              to: '/docs/intro'
+            }
+          ]
         },
         {
           title: 'Community',
           items: [
             {
               label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              href: 'https://stackoverflow.com/questions/tagged/rmbg'
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
-            },
-          ],
+              label: 'Github Discussions',
+              href: 'https://github.com/zhbhun/rmbg/discussions'
+            }
+          ]
         },
         {
           title: 'More',
           items: [
             {
               label: 'Blog',
-              to: '/blog',
+              to: '/blog'
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
-            },
-          ],
-        },
+              href: 'https://github.com/zhbhun/rmbg'
+            }
+          ]
+        }
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} RMBG.`
     },
     prism: {
       theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
-    },
+      darkTheme: prismThemes.dracula
+    }
   } satisfies Preset.ThemeConfig,
-};
 
-export default config;
+  plugins: [
+    async function postCSSPlugin(context, options) {
+      return {
+        name: 'docusaurus-postcss',
+        configurePostCss(postcssOptions) {
+          // Appends TailwindCSS and AutoPrefixer.
+          postcssOptions.plugins.push(require('tailwindcss'))
+          postcssOptions.plugins.push(require('autoprefixer'))
+          return postcssOptions
+        }
+      }
+    }
+  ]
+}
+
+export default config

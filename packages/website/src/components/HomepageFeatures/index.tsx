@@ -2,53 +2,50 @@ import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
-type FeatureItem = {
+interface FeatureItem {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
+  picture: string;
   description: JSX.Element;
 };
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Effortless Background Removal',
+    picture: require('@site/static/img/feature1.png').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Enhance your images effortlessly with our background removal tool. It's intuitive and supports multiple models for diverse editing needs, ensuring standout results quickly.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Privacy and Local Execution',
+    picture: require('@site/static/img/feature2.png').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Guarantee your privacy with our local processing feature. Your images are processed on your device, ensuring data security and swift performance without the need for internet uploads.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Open Source and Free',
+    picture: require('@site/static/img/feature3.png').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+       Unleash your creativity without limits. Our tool is open-source and entirely free.
       </>
     ),
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({title, picture, description}: FeatureItem) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
+        <img className={clsx(styles.featureSvg, 'inline-block')} alt={title} src={picture} />
       </div>
       <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
+        <Heading as="h3" className="py-2 text-xl font-bold">{title}</Heading>
         <p>{description}</p>
       </div>
     </div>

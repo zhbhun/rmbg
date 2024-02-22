@@ -8,6 +8,8 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/no-unused-vars': 'warn',
+        '@typescript-eslint/no-var-requires': 'off',
+        '@typescript-eslint/prefer-nullish-coalescing': 'off',
         '@typescript-eslint/prefer-ts-expect-error': 'off',
         '@typescript-eslint/return-await': 'off',
         '@typescript-eslint/strict-boolean-expressions': 'off'
