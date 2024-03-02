@@ -21,7 +21,7 @@ export default {
     'isnet-anime-19.onnx'
   ],
   mime: 'application/octet-stream',
-  publicPath: 'https://unpkg.com/@rmbg/model-isnet-anime@1.0.0/',
+  publicPath: 'https://unpkg.com/@rmbg/model-isnet-anime@0.0.1/',
   resolution: 320,
   size: 176069933
 }

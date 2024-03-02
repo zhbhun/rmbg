@@ -8,7 +8,7 @@ export default {
     'silueta-5.onnx'
   ],
   mime: 'application/octet-stream',
-  publicPath: 'https://unpkg.com/@rmbg/model-silueta@1.0.0/',
+  publicPath: 'https://unpkg.com/@rmbg/model-silueta@0.0.1/',
   resolution: 320,
   size: 44173029
 }

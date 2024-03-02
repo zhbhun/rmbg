@@ -12,7 +12,7 @@ export default {
     'general-9.onnx'
   ],
   mime: 'application/octet-stream',
-  publicPath: 'https://unpkg.com/@rmbg/model-general@1.0.0/',
+  publicPath: 'https://unpkg.com/@rmbg/model-general@0.0.1/',
   resolution: 1024,
   size: 88188479
 }

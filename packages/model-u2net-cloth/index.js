@@ -21,7 +21,7 @@ export default {
     'u2net-cloth-19.onnx'
   ],
   mime: 'application/octet-stream',
-  publicPath: 'https://unpkg.com/@rmbg/model-u2net-cloth@1.0.0/',
+  publicPath: 'https://unpkg.com/@rmbg/model-u2net-cloth@0.0.1/',
   resolution: 320,
   size: 176194565
 }
