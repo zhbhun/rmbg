@@ -28,14 +28,16 @@ export interface RMBGONNX {
 }
 
 export interface RMBGOptions {
-  /** defualt is general  */
+  /** Model  */
   model: RMBGModel
+  /** ONNX */
   onnx?: RMBGONNX
   /** ouout image's max resolution */
   maxResolution?: number
+  /** Abort controller */
   abortController?: AbortController
   /** progress callback */
-  onProgress?: (progress: number) => void
+  onProgress?: (progress: number, download: number, process: number) => void
 }
 
 export const defaultMaxResolution = 2048

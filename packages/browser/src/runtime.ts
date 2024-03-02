@@ -6,11 +6,15 @@ window.addEventListener('message', (event) => {
     if (name === 'rmbg:process') {
       const { image, options } = detail
       rmbg(image, {
-        onProgress(progress) {
+        onProgress(progress, download, process) {
           window.parent.postMessage(
             {
               name: 'rmbg:progress',
-              detail: progress
+              detail: {
+                progress,
+                download,
+                process
+              }
             },
             '*'
           )

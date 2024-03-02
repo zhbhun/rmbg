@@ -24,9 +24,10 @@ export async function rmbg(
     onnx = defaultONNX,
     maxResolution = defaultMaxResolution,
     abortController,
-    onProgress,
+    onProgress
   }: RMBGOptions
 ): Promise<Blob> {
+  // abort controller
   const wasmLoadController = new AbortController()
   const modelLoadController = new AbortController()
   let processInterval: ReturnType<typeof setInterval> | null = null
@@ -39,9 +40,9 @@ export async function rmbg(
   })
 
   try {
-    let progress = 0;
+    let progress = 0
 
-    // onnx
+    // load onnx
     const capabilities = {
       simd: await simd(),
       threads: await threads(),
@@ -52,11 +53,11 @@ export async function rmbg(
     }
     ort.env.wasm.numThreads = capabilities.numThreads
     ort.env.wasm.simd = capabilities.simd
-    ort.env.wasm.proxy = true;
+    ort.env.wasm.proxy = true
     const wasms = await loadWASM(onnx, {
       abortController: wasmLoadController,
       onProgress(value) {
-        onProgress?.(progress + (1 / 3) * value)
+        onProgress?.(progress + (1 / 3) * value, progress + (1 / 3) * value, 0)
       }
     })
     ort.env.wasm.wasmPaths = wasms.reduce(
@@ -68,12 +69,16 @@ export async function rmbg(
     )
     progress += 1 / 3
 
-    // model
+    // load model
     const modelData = await (
       await loadModel(model, {
         abortController: modelLoadController,
         onProgress(value) {
-          onProgress?.(progress + (1 / 3) * value)
+          onProgress?.(
+            progress + (1 / 3) * value,
+            progress + (2 / 3) * value,
+            0
+          )
         }
       })
     ).arrayBuffer()
@@ -91,7 +96,7 @@ export async function rmbg(
     })
     progress += 1 / 3
 
-    // process
+    // process image
     if (onProgress) {
       processInterval = setInterval(() => {
         if (progress >= 0.99 && processInterval != null) {
@@ -100,7 +105,7 @@ export async function rmbg(
         }
         progress += 0.01
         progress = Math.min(progress, 0.99)
-        onProgress?.(progress)
+        onProgress?.(progress, 1, Math.min((1 - progress) * 3, 0.99))
       }, 1000)
     }
 

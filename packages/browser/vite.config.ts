@@ -26,7 +26,7 @@ export default defineConfig((env) => {
         {
           find: '@rmbg/browser',
           replacement: '/src/index.ts'
-        }
+        },
       ]
     }
   }

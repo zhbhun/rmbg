@@ -1,17 +1,15 @@
 import { useRef } from 'react'
-import generalModel from '@rmbg/model-general'
-import siluetaModel from '@rmbg/model-silueta'
 import rmbg from '@rmbg/browser'
+import {
+  createGeneralModel,
+  createSiluetaModel,
+  createBriaaiModel
+} from '../src/models'
 
 const models: any = {
-  general: {
-    ...generalModel,
-    publicPath: '/node_modules/@rmbg/model-general/'
-  },
-  silueta: {
-    ...siluetaModel,
-    publicPath: '/node_modules/@rmbg/model-silueta/'
-  }
+  general: createGeneralModel('/node_modules/@rmbg/model-general/'),
+  silueta: createSiluetaModel('/node_modules/@rmbg/model-silueta/'),
+  briaai: createBriaaiModel('/node_modules/@rmbg/model-briaai/')
 }
 
 function App() {
@@ -55,6 +53,7 @@ function App() {
           <select ref={modelRef} name="model" onChange={handleGenerate}>
             <option value="general">general</option>
             <option value="silueta">silueta</option>
+            <option value="briaai">briaai</option>
           </select>
           <input ref={fileRef} type="file" onChange={handleGenerate} />
           <div ref={logRef} />

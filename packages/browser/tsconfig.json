@@ -15,7 +15,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@rmbg/browser": ["./src/index.ts"]
+      "@rmbg/browser": ["./src/index.ts"],
+      "@rmbg/browser/lib/models": ["./src/models.ts"]
     },
 
     /* Linting */

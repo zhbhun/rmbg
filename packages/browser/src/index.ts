@@ -35,7 +35,7 @@ async function rmbg(
         } else if (name === 'rmbg:error') {
           destroy()
         } else if (name === 'rmbg:progress') {
-          onProgress?.(detail)
+          onProgress?.(detail.progress, detail.download, detail.process)
         }
       }
     }
