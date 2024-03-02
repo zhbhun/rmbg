@@ -8,7 +8,7 @@ const config: Config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://rmbg.netlify.app',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -29,7 +29,7 @@ const config: Config = {
     locales: ['en']
   },
 
-  staticDirectories: ['static', '.'],
+  staticDirectories: process.env.NODE_ENV === 'development' ? ['static', '.'] : ['static'],
 
   presets: [
     [
@@ -66,7 +66,7 @@ const config: Config = {
     navbar: {
       title: 'RMBG',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'RMBG',
         src: 'img/logo.png'
       },
       items: [
@@ -78,7 +78,7 @@ const config: Config = {
         },
         { to: '/blog', label: 'Blog', position: 'left' },
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/zhbhun/rmbg',
           label: 'GitHub',
           position: 'right'
         }
