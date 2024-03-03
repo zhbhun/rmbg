@@ -8,15 +8,17 @@ const config: Config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://rmbg.netlify.app',
+  url: 'https://zhbhun.gitub.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/rmbg/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  // organizationName: 'zhbhun', // Usually your GitHub org/user name.
-  // projectName: 'rmbg', // Usually your repo name.
+  organizationName: 'zhbhun', // Usually your GitHub org/user name.
+  projectName: 'rmbg', // Usually your repo name.
+  deploymentBranch: 'gh-pages',
+  trailingSlash: false,
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
