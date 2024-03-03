@@ -1,5 +1,7 @@
 import { type RMBGModel } from './core/config'
 
+export type { RMBGModel }
+
 export function createBriaaiModel(
   publicPath = 'https://unpkg.com/@rmbg/model-briaai@0.0.1/'
 ): RMBGModel {
@@ -94,7 +96,7 @@ export function createSiluetaModel(
 }
 
 export function createU2netClothModel(
-  publicPath: 'https://unpkg.com/@rmbg/model-u2net-cloth@0.0.1/'
+  publicPath = 'https://unpkg.com/@rmbg/model-u2net-cloth@0.0.1/'
 ): RMBGModel {
   return {
     name: 'u2net-cloth',

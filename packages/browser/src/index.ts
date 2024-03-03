@@ -1,5 +1,7 @@
 import { type RMBGOptions } from './core/config'
 
+export * from './core/config'
+
 async function rmbg(
   image: string,
   {
