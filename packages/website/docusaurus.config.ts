@@ -42,13 +42,6 @@ const config: Config = {
           editUrl:
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/'
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/'
-        },
         theme: {
           customCss: './src/css/custom.css'
         }
@@ -71,12 +64,14 @@ const config: Config = {
       },
       items: [
         {
+          href: '/tool',
+          label: 'Tool'
+        },
+        {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
-          position: 'left',
-          label: 'Tutorial'
+          label: 'Document'
         },
-        { to: '/blog', label: 'Blog', position: 'left' },
         {
           href: 'https://github.com/zhbhun/rmbg',
           label: 'GitHub',
@@ -113,8 +108,8 @@ const config: Config = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: '/blog'
+              label: 'Document',
+              to: '/docs'
             },
             {
               label: 'GitHub',

@@ -10,11 +10,11 @@ interface FeatureItem {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Effortless Background Removal',
+    title: 'Various Background Removal',
     picture: require('@site/static/img/feature1.png').default,
     description: (
       <>
-        Enhance your images effortlessly with our background removal tool. It's intuitive and supports multiple models for diverse editing needs, ensuring standout results quickly.
+        Elevate your images effortlessly with our advanced background removal tool. It's designed to be intuitive and versatile, supporting a wide range of AI models to meet diverse editing needs. Experience standout results quickly with our tool that emphasizes the flexibility of multiple AI model support.
       </>
     ),
   },

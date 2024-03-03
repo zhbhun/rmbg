@@ -1,7 +1,17 @@
+import clsx from 'clsx'
 import { useCallback, useEffect, useState } from 'react'
 import { Circle as CircleProgress } from 'rc-progress'
 import rmbg from '@rmbg/browser'
-import { createBriaaiModel } from '@rmbg/browser/models'
+import {
+  type RMBGModel,
+  createBriaaiModel,
+  createGeneralModel,
+  createIsnetAnimeModel,
+  createSiluetaModel,
+  createU2netClothModel,
+  createU2netpModel
+} from '@rmbg/browser/models'
+import Select from 'react-select'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Layout from '@theme/Layout'
 import Heading from '@theme/Heading'
@@ -11,13 +21,45 @@ import CloseOutlinedIcon from '../../icons/outlined/close.svg'
 import CompareOutlinedIcon from '../../icons/outlined/compare.svg'
 import { createImageWithBackground } from '../../utils/image'
 
-const model = createBriaaiModel(
-  process.env.NODE_ENV === 'development'
-    ? '/node_modules/@rmbg/model-briaai/'
-    : undefined
-)
+interface ModelOption {
+  label: string
+  value: RMBGModel
+}
 
-console.log('>>', model, process.env.NODE_ENV)
+const models: ModelOption[] = [
+  {
+    label: 'Briaai',
+    value: createBriaaiModel(
+      process.env.NODE_ENV === 'development'
+        ? '/node_modules/@rmbg/model-briaai/'
+        : undefined
+    )
+  },
+  {
+    label: 'General',
+    value: createGeneralModel(
+      process.env.NODE_ENV === 'development'
+        ? '/node_modules/@rmbg/model-general/'
+        : undefined
+    )
+  },
+  {
+    label: 'Silueta',
+    value: createSiluetaModel(
+      process.env.NODE_ENV === 'development'
+        ? '/node_modules/@rmbg/model-silueta/'
+        : undefined
+    )
+  },
+  {
+    label: 'U2netp',
+    value: createU2netpModel(
+      process.env.NODE_ENV === 'development'
+        ? '/node_modules/@rmbg/model-u2netp/'
+        : undefined
+    )
+  }
+]
 
 const images = [
   'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=1024',
@@ -29,52 +71,74 @@ const images = [
 
 export default function Playground(): JSX.Element {
   const { siteConfig } = useDocusaurusContext()
+  const [model, setModel] = useState<ModelOption>(models[0])
   const [source, setSource] = useState('')
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const [downloading, setDownloading] = useState(false)
+  const [caches, setCaches] = useState<Record<string, string>>({})
   const [result, setResult] = useState('')
   const [background, setBackground] = useState('transparent')
   const [comparing, setComparing] = useState(false)
 
-  const changeSource = (newSource: string) => {
-    setSource(newSource)
-  }
   const reset = useCallback(() => {
     setSource('')
     setLoading(false)
+    setProgress(0)
+    setDownloading(false)
+    setCaches({})
     setResult('')
     setBackground('transparent')
     setComparing(false)
   }, [])
 
-  useEffect(() => {
-    if (source) {
-      setLoading(true)
-      setProgress(0)
-      setDownloading(true)
-      rmbg(source, {
-        model,
-        onnx: {
-          publicPath: '/node_modules/onnxruntime-web/dist/'
-        },
-        runtime: '/node_modules/@rmbg/browser/dist/rmbg-runtime.iife.js',
-        onProgress(progress, download) {
-          setProgress(progress * 100)
-          if (download >= 1) {
-            setDownloading(false)
-          }
+  const process = useCallback((source: string, model: RMBGModel) => {
+    setLoading(true)
+    setProgress(0)
+    setDownloading(true)
+    rmbg(source, {
+      model,
+      onnx: {
+        publicPath: '/node_modules/onnxruntime-web/dist/'
+      },
+      runtime: '/node_modules/@rmbg/browser/dist/rmbg-runtime.iife.js',
+      onProgress(progress, download) {
+        setProgress(progress * 100)
+        if (download >= 1) {
+          setDownloading(false)
         }
+      }
+    })
+      .then((image) => {
+        setLoading(false)
+        setProgress(0)
+        setDownloading(false)
+        setCaches((caches) => ({
+          ...caches,
+          [model.name]: URL.createObjectURL(image)
+        }))
+        setResult(URL.createObjectURL(image))
       })
-        .then((image) => {
-          setResult(URL.createObjectURL(image))
-          setLoading(false)
-        })
-        .catch(() => {
-          reset()
-        })
+      .catch(() => {
+        reset()
+      })
+  }, [])
+
+  useEffect(() => {
+    if (source && model) {
+      if (result) {
+        const cache = caches[model.value.name]
+        if (cache) {
+          setResult(cache)
+        } else {
+          process(source, model.value)
+        }
+      } else {
+        process(source, model.value)
+      }
     }
-  }, [source, reset])
+  }, [source, model, result, process])
+
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
@@ -95,7 +159,14 @@ export default function Playground(): JSX.Element {
         </header>
         <main>
           {result ? (
-            <div className="flex justify-between items-center mx-auto my-4 max-w-screen-sm">
+            <div
+              className={clsx(
+                'flex justify-between items-center mx-auto my-4 max-w-screen-sm',
+                {
+                  'pointer-events-none opacity-60': loading
+                }
+              )}
+            >
               <CirclePicker
                 colors={[
                   'transparent',
@@ -129,7 +200,7 @@ export default function Playground(): JSX.Element {
           <div className="relative mx-auto max-w-screen-sm aspect-[4/3] border border-solid border-gray-100 rounded-2xl shadow-lg overflow-hidden">
             {!source ? (
               <div
-                className="flex justify-center items-center w-full h-full"
+                className="flex flex-col justify-center items-center w-full h-full"
                 style={{
                   backgroundImage:
                     'repeating-conic-gradient(#f5f2fa 0 25%,#0000 0 50%)',
@@ -145,16 +216,38 @@ export default function Playground(): JSX.Element {
                       const file = e.target.files?.[0]
                       if (file) {
                         const sourceURL = URL.createObjectURL(file)
-                        changeSource(sourceURL)
+                        setSource(sourceURL)
                       }
                     }}
                   />
                 </button>
+                <div
+                  className={clsx('mt-6 text-center', {
+                    'pointer-events-none opacity-60': loading
+                  })}
+                >
+                  <div className="text-sm text-neutral-500">
+                    No picture on hand? Try with one of these
+                  </div>
+                  <div className="my-2 flex justify-center items-center">
+                    {images.map((image, index) => (
+                      <img
+                        key={index}
+                        className="mr-1 w-14 h-14 rounded object-cover cursor-pointer last:mr-0 hover:opacity-85"
+                        src={image}
+                        alt=""
+                        onClick={() => {
+                          setSource(image)
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
             ) : null}
 
             {source && (!result || comparing) ? (
-              <div className="absolute inset-0 flex justify-center items-center w-full h-full bg-gray-100">
+              <div className="absolute inset-0 flex justify-center items-center w-full h-full bg-neutral-100">
                 <img
                   className="block w-auto h-full object-contain"
                   src={source}
@@ -207,31 +300,45 @@ export default function Playground(): JSX.Element {
             ) : null}
           </div>
 
-          {!result && !loading ? (
-            <div className="my-6 text-center">
-              <div className="text-sm text-gray-500">
-                No picture on hand? Try with one of these
-              </div>
-              <div className="my-2 flex justify-center items-center">
-                {images.map((image, index) => (
-                  <img
-                    key={index}
-                    className="mr-1 w-14 h-14 rounded object-cover cursor-pointer last:mr-0 hover:opacity-85"
-                    src={image}
-                    alt=""
-                    onClick={() => {
-                      changeSource(image)
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          ) : null}
-
-          {result ? (
-            <div className="my-6 text-center">
+          <div
+            className={clsx('flex items-center mx-auto my-4 max-w-screen-sm', {
+              'pointer-events-none opacity-60': loading,
+              'justify-center': !result,
+              'justify-between': result
+            })}
+          >
+            <Select
+              className="w-40"
+              value={model}
+              onChange={setModel}
+              options={models}
+              theme={
+                {
+                  colors: {
+                    primary: '#15803d',
+                    primary75: '#14532d',
+                    primary50: '#22c55e',
+                    primary25: '#bbf7d0',
+                    danger: '#b91c1c',
+                    dangerLight: '#fecaca',
+                    neutral0: '#fafafa',
+                    neutral5: '#f5f5f5',
+                    neutral10: '#e5e5e5',
+                    neutral20: '#d4d4d4',
+                    neutral30: '#a3a3a3',
+                    neutral40: '#737373',
+                    neutral50: '#525252',
+                    neutral60: '#404040',
+                    neutral70: '#262626',
+                    neutral80: '#171717',
+                    neutral90: '#0a0a0a'
+                  }
+                } as any
+              }
+            />
+            {result ? (
               <button
-                className="button button--primary button--lg relative"
+                className="button button--primary relative"
                 onClick={() => {
                   const a = document.createElement('a')
                   if (background === 'transparent') {
@@ -251,8 +358,8 @@ export default function Playground(): JSX.Element {
               >
                 Download
               </button>
-            </div>
-          ) : null}
+            ) : null}
+          </div>
         </main>
       </div>
     </Layout>

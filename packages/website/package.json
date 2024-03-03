@@ -21,12 +21,18 @@
     "@mdx-js/react": "^3.0.0",
     "@rmbg/browser": "^0.0.1",
     "@rmbg/model-briaai": "^0.0.1",
+    "@rmbg/model-general": "^0.0.1",
+    "@rmbg/model-isnet-anime": "^0.0.1",
+    "@rmbg/model-silueta": "^0.0.1",
+    "@rmbg/model-u2net-cloth": "^0.0.1",
+    "@rmbg/model-u2netp": "^0.0.1",
     "clsx": "^2.0.0",
     "prism-react-renderer": "^2.3.0",
     "rc-progress": "^3.5.1",
     "react": "^18.0.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.0.0",
+    "react-select": "^5.8.0",
     "react-spinners": "^0.13.8"
   },
   "devDependencies": {
