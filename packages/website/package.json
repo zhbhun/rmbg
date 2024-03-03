@@ -19,7 +19,7 @@
     "@docusaurus/preset-classic": "3.0.1",
     "@material-design-icons/svg": "^0.14.13",
     "@mdx-js/react": "^3.0.0",
-    "@rmbg/browser": "^0.0.1",
+    "@rmbg/browser": "^0.0.2",
     "@rmbg/model-briaai": "^0.0.1",
     "@rmbg/model-general": "^0.0.1",
     "@rmbg/model-isnet-anime": "^0.0.1",
