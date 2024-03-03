@@ -1,25 +1,18 @@
-import clsx from 'clsx'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
+import Layout from '@theme/Layout'
+import Heading from '@theme/Heading'
 import { Circle as CircleProgress } from 'rc-progress'
 import rmbg from '@rmbg/browser'
 import {
   type RMBGModel,
   createBriaaiModel,
   createGeneralModel,
-  createIsnetAnimeModel,
   createSiluetaModel,
-  createU2netClothModel,
   createU2netpModel
 } from '@rmbg/browser/models'
-import Select from 'react-select'
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
-import Layout from '@theme/Layout'
-import Heading from '@theme/Heading'
-import { CirclePicker } from 'react-color'
-
-import CloseOutlinedIcon from '../../icons/outlined/close.svg'
-import CompareOutlinedIcon from '../../icons/outlined/compare.svg'
-import { createImageWithBackground } from '../../utils/image'
+import AddPhotoIcon from '../../icons/outlined/add_photo.svg'
+import DownloadIcon from '../../icons/outlined/download.svg'
 
 interface ModelOption {
   label: string
@@ -61,307 +54,273 @@ const models: ModelOption[] = [
   }
 ]
 
-const images = [
-  'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=1024',
-  'https://images.unsplash.com/photo-1623006772851-a8bf2c47d304?q=80&w=1024',
-  'https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=1024',
-  'https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?q=80&w=1024',
-  'https://images.unsplash.com/photo-1620917669809-1af0497965de?q=80&w=1024'
-]
+let taskid = 0
 
-export default function Playground(): JSX.Element {
-  const { siteConfig } = useDocusaurusContext()
-  const [model, setModel] = useState<ModelOption>(models[0])
-  const [source, setSource] = useState('')
+interface TaskItem {
+  id: string
+  file: File
+  model: RMBGModel
+  status: 'pending' | 'processing' | 'done' | 'error'
+  result?: string
+}
+
+interface TaskProcessProps {
+  task: TaskItem
+  onFinish?: (task: TaskItem) => void
+}
+
+function TaskProcess({ task, onFinish }: TaskProcessProps) {
+  const source = useMemo(() => URL.createObjectURL(task.file), [task.file])
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const [downloading, setDownloading] = useState(false)
-  const [caches, setCaches] = useState<Record<string, string>>({})
   const [result, setResult] = useState('')
   const [background, setBackground] = useState('transparent')
-  const [comparing, setComparing] = useState(false)
 
   const reset = useCallback(() => {
-    setSource('')
     setLoading(false)
     setProgress(0)
     setDownloading(false)
-    setCaches({})
     setResult('')
     setBackground('transparent')
-    setComparing(false)
   }, [])
 
-  const process = useCallback((source: string, model: RMBGModel) => {
-    setLoading(true)
-    setProgress(0)
-    setDownloading(true)
-    rmbg(source, {
-      model,
-      onnx: {
-        publicPath: '/node_modules/onnxruntime-web/dist/'
-      },
-      runtime: '/node_modules/@rmbg/browser/dist/rmbg-runtime.iife.js',
-      onProgress(progress, download) {
-        setProgress(progress * 100)
-        if (download >= 1) {
-          setDownloading(false)
+  const process = useCallback(
+    (source: string, model: RMBGModel) => {
+      setLoading(true)
+      setProgress(0)
+      setDownloading(true)
+      rmbg(source, {
+        model,
+        onnx: {
+          publicPath: '/node_modules/onnxruntime-web/dist/'
+        },
+        runtime: '/node_modules/@rmbg/browser/dist/rmbg-runtime.iife.js',
+        onProgress(progress, download) {
+          setProgress(progress * 100)
+          if (download >= 1) {
+            setDownloading(false)
+          }
         }
-      }
-    })
-      .then((image) => {
-        setLoading(false)
-        setProgress(0)
-        setDownloading(false)
-        setCaches((caches) => ({
-          ...caches,
-          [model.name]: URL.createObjectURL(image)
-        }))
-        setResult(URL.createObjectURL(image))
       })
-      .catch(() => {
-        reset()
-      })
-  }, [])
+        .then((image) => {
+          setLoading(false)
+          setProgress(0)
+          setDownloading(false)
+          setResult(URL.createObjectURL(image))
+          onFinish?.({
+            ...task,
+            status: 'done'
+          })
+        })
+        .catch(() => {
+          reset()
+          onFinish?.({
+            ...task,
+            status: 'error'
+          })
+        })
+    },
+    [task, reset, onFinish]
+  )
 
   useEffect(() => {
-    if (source && model) {
-      if (result) {
-        const cache = caches[model.value.name]
-        if (cache) {
-          setResult(cache)
-        } else {
-          process(source, model.value)
-        }
-      } else {
-        process(source, model.value)
-      }
+    if (task.status === 'processing' && source) {
+      process(source, task.model)
     }
-  }, [source, model, result, process])
+  }, [task, source, process])
+  return (
+    <div className="my-3 bg-white rounded-lg shadow-lg overflow-hidden md:shadow-none">
+      <div className="flex justify-between items-center py-2 px-3 md:">
+        <div className="flex flex-row justify-start items-center">
+          <img
+            className="hidden mr-4 w-[50px] h-[50px] object-cover md:block"
+            src={result || source}
+            style={{
+              backgroundImage:
+                'repeating-conic-gradient(#f5f2fa 0 25%, #0003 0 50%)',
+              backgroundSize: '28px 28px'
+            }}
+          />
+          <div className="text-sm font-semibold">{task.file.name}</div>
+        </div>
+        {result ? (
+          <DownloadIcon
+            className="w-5 h-5 cursor-pointer"
+            fill="#2e8555"
+            onClick={() => {
+              const a = document.createElement('a')
+              a.href = result
+              a.download = `${task.file.name}-rmbg.png`
+              a.click()
+            }}
+          />
+        ) : (
+          <div className="hidden text-neutral-500 md:block">
+            {task.status === 'processing'
+              ? `${progress.toFixed(2)}%`
+              : 'Pending...'}
+          </div>
+        )}
+      </div>
+      <div className="relative aspect-[2/1] overflow-hidden md:hidden">
+        <div className="absolute inset-0 flex justify-center items-center w-full h-full bg-neutral-50">
+          <img className="block w-auto h-full object-contain" src={source} />
+        </div>
+        {result ? (
+          <div className="absolute inset-0 flex justify-center items-center w-full h-full bg-gray-100">
+            <img
+              className="block w-auto h-full object-contain"
+              style={
+                background === 'transparent'
+                  ? {
+                      backgroundImage:
+                        'repeating-conic-gradient(#f5f2fa 0 25%, #0003 0 50%)',
+                      backgroundSize: '28px 28px'
+                    }
+                  : { backgroundColor: background }
+              }
+              src={result}
+            />
+          </div>
+        ) : null}
+        {loading ? (
+          <div className="absolute flex flex-col justify-center items-center inset-0 w-full h-full bg-[rgba(0,0,0,0.5)]">
+            <CircleProgress
+              className="w-8 h-8"
+              percent={progress}
+              strokeWidth={6}
+              strokeColor="#2e8555"
+              trailWidth={6}
+            />
+            <div className="mt-2 text-white text-xs">
+              {downloading
+                ? 'Downloading the ai model...'
+                : 'Image processing...'}
+            </div>
+          </div>
+        ) : task.status === 'pending' ? (
+          <div className="absolute flex flex-col justify-center items-center inset-0 w-full h-full bg-[rgba(0,0,0,0.5)]">
+            <div className="mt-2 text-white text-xs">Pending...</div>
+          </div>
+        ) : null}
+      </div>
+    </div>
+  )
+}
 
+export default function App(): JSX.Element {
+  const { siteConfig } = useDocusaurusContext()
+  const [model, setModel] = useState<ModelOption>(models[0])
+  const [tasks, setTasks] = useState<TaskItem[]>([])
+  const handleFinish = useCallback((task) => {
+    setTasks((tasks) => {
+      return tasks.map((t) => (t.id === task.id ? task : t))
+    })
+  }, [])
+  useEffect(() => {
+    const pendingIndex = tasks.findIndex((task) => task.status === 'pending')
+    if (
+      pendingIndex >= 0 &&
+      !tasks.some((task) => task.status === 'processing')
+    ) {
+      setTasks((tasks) => {
+        const newTasks = tasks.slice()
+        newTasks[pendingIndex] = {
+          ...newTasks[pendingIndex],
+          status: 'processing'
+        }
+        return newTasks
+      })
+    }
+  }, [tasks])
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
       description="Description will go into a meta tag in <head />"
     >
-      <div className="container my-20">
-        <header className="mb-6 text-center md:mb-12">
-          <Heading
-            as="h1"
-            className="mb-4 font-bold text-4xl md:mb-6 md:text-6xl"
-          >
-            Background Remover
-          </Heading>
-          <p className="text-base text-[--ifm-color-secondary-darkest] md:text-lg">
-            Remove image backgrounds at no cost and substitute them with a
-            variety of backgrounds you prefer.
-          </p>
-        </header>
-        <main>
-          {result ? (
-            <div
-              className={clsx(
-                'flex justify-between items-center mx-auto my-4 max-w-screen-sm',
-                {
-                  'pointer-events-none opacity-60': loading
-                }
-              )}
-            >
-              <CirclePicker
-                colors={[
-                  'transparent',
-                  '#000000',
-                  '#e91e63',
-                  '#2196f3',
-                  '#4caf50'
-                ]}
-                onChange={(color) => {
-                  setBackground(color.hex)
-                }}
+      <main className="grow">
+        <section
+          className="relative h-[600px] md:h-[400px] lg:h-[500px]"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(255, 255, 255), rgb(254, 248, 232))'
+          }}
+        >
+          <div className="container flex flex-col md:flex-row md:justify-between md:items-center md:h-full">
+            <div className="relative flex flex-col justify-bewteen h-[300px] pt-6 md:w-[300px] lg:w-[400px]">
+              <img
+                className="absolute bottom-0 right-[-50px] w-full max-w-[400px] opacity-20 sm:max-w-[500px] md:w-ful md:left-[-50px] md:right-auto md:bottom-[-10px] lg:left-0"
+                src="/static/img/hero.png"
               />
-              <CompareOutlinedIcon
-                className="fill-gray-600 cursor-pointer hover:fill-gray-900"
-                onPointerDown={() => {
-                  setComparing(true)
-                }}
-                onPointerUp={() => {
-                  setComparing(false)
-                }}
-                onPointerOut={() => {
-                  setComparing(false)
-                }}
-                onPointerCancel={() => {
-                  setComparing(false)
+              <Heading as="h1" className="text-neutral-700">
+                BACKGROUND REMOVER
+              </Heading>
+              <p className="mb-4 text-sm text-[#666] text-neutral-500">
+                Automatically and zero cost.
+              </p>
+            </div>
+            <div className="relative flex flex-col justify-center items-center my-[25px] h-[250px] bg-[rgba(255,255,255,0.25)] rounded-lg shadow-lg backdrop-blur md:flex-1 md:mx-[20px] lg:mx-[50px]">
+              <AddPhotoIcon className="w-16 h-16" fill="#404040" />
+              <div className="mt-4 text-lg text-neutral-700 font-semibold">
+                Upload you files here
+              </div>
+              <div className="text-sm text-neutral-600">
+                Up to 20 images, max 5 MB each.
+              </div>
+              <div className="flex justify-center items-center text-xs text-neutral-500">
+                <label>Model: </label>
+                <select
+                  className="relative z-10 width-full h-[32px] text-xs text-neutral-500 border-none bg-transparent"
+                  value={model.value.name}
+                  onChange={(e) => {
+                    setModel(
+                      models.find((m) => m.value.name === e.target.value)!
+                    )
+                  }}
+                >
+                  {models.map((model) => (
+                    <option key={model.value.name} value={model.value.name}>
+                      {model.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <input
+                className="absolute inset-0 opacity-0 cursor-pointer"
+                type="file"
+                accept="image/png, image/jpg, image/jpeg"
+                multiple
+                onChange={(e) => {
+                  const files = Array.from(e.target.files || []).slice(0, 20)
+                  setTasks((prev) => [
+                    ...prev,
+                    ...files.map((file) => ({
+                      id: `${taskid++}`,
+                      file,
+                      model: model.value,
+                      status: 'pending'
+                    }))
+                  ])
                 }}
               />
             </div>
-          ) : null}
-
-          <div className="relative mx-auto max-w-screen-sm aspect-[4/3] border border-solid border-gray-100 rounded-2xl shadow-lg overflow-hidden">
-            {!source ? (
-              <div
-                className="flex flex-col justify-center items-center w-full h-full"
-                style={{
-                  backgroundImage:
-                    'repeating-conic-gradient(#f5f2fa 0 25%,#0000 0 50%)',
-                  backgroundSize: '28px 28px'
-                }}
-              >
-                <button className="button button--primary button--lg relative">
-                  Upload an Image
-                  <input
-                    type="file"
-                    className="absolute inset-0 opacity-0 cursor-pointer"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0]
-                      if (file) {
-                        const sourceURL = URL.createObjectURL(file)
-                        setSource(sourceURL)
-                      }
-                    }}
-                  />
-                </button>
-                <div
-                  className={clsx('mt-6 text-center', {
-                    'pointer-events-none opacity-60': loading
-                  })}
-                >
-                  <div className="text-sm text-neutral-500">
-                    No picture on hand? Try with one of these
-                  </div>
-                  <div className="my-2 flex justify-center items-center">
-                    {images.map((image, index) => (
-                      <img
-                        key={index}
-                        className="mr-1 w-14 h-14 rounded object-cover cursor-pointer last:mr-0 hover:opacity-85"
-                        src={image}
-                        alt=""
-                        onClick={() => {
-                          setSource(image)
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ) : null}
-
-            {source && (!result || comparing) ? (
-              <div className="absolute inset-0 flex justify-center items-center w-full h-full bg-neutral-100">
-                <img
-                  className="block w-auto h-full object-contain"
-                  src={source}
-                />
-              </div>
-            ) : null}
-
-            {result && !comparing ? (
-              <div className="absolute inset-0 flex justify-center items-center w-full h-full bg-gray-100">
-                <img
-                  className="block w-auto h-full object-contain"
-                  style={
-                    background === 'transparent'
-                      ? {
-                          backgroundImage:
-                            'repeating-conic-gradient(#f5f2fa 0 25%, #0003 0 50%)',
-                          backgroundSize: '28px 28px'
-                        }
-                      : { backgroundColor: background }
-                  }
-                  src={result}
-                />
-              </div>
-            ) : null}
-
-            {result ? (
-              <div
-                className="absolute top-2 right-2 flex justify-center items-center w-8 h-8 bg-gray-200 rounded-full cursor-pointer hover:bg-gray-300"
-                onClick={reset}
-              >
-                <CloseOutlinedIcon className="w-4 h-4" />
-              </div>
-            ) : null}
-
-            {loading ? (
-              <div className="absolute flex flex-col justify-center items-center inset-0 w-full h-full bg-[rgba(0,0,0,0.5)]">
-                <CircleProgress
-                  className="w-8 h-8"
-                  percent={progress}
-                  strokeWidth={6}
-                  strokeColor="#2e8555"
-                  trailWidth={6}
-                />
-                <div className="mt-2 text-white text-xs">
-                  {downloading
-                    ? 'Downloading the ai model...'
-                    : 'Image processing...'}
-                </div>
-              </div>
-            ) : null}
           </div>
-
-          <div
-            className={clsx('flex items-center mx-auto my-4 max-w-screen-sm', {
-              'pointer-events-none opacity-60': loading,
-              'justify-center': !result,
-              'justify-between': result
-            })}
-          >
-            <Select
-              className="w-40"
-              value={model}
-              onChange={setModel}
-              options={models}
-              theme={
-                {
-                  colors: {
-                    primary: '#15803d',
-                    primary75: '#14532d',
-                    primary50: '#22c55e',
-                    primary25: '#bbf7d0',
-                    danger: '#b91c1c',
-                    dangerLight: '#fecaca',
-                    neutral0: '#fafafa',
-                    neutral5: '#f5f5f5',
-                    neutral10: '#e5e5e5',
-                    neutral20: '#d4d4d4',
-                    neutral30: '#a3a3a3',
-                    neutral40: '#737373',
-                    neutral50: '#525252',
-                    neutral60: '#404040',
-                    neutral70: '#262626',
-                    neutral80: '#171717',
-                    neutral90: '#0a0a0a'
-                  }
-                } as any
-              }
-            />
-            {result ? (
-              <button
-                className="button button--primary relative"
-                onClick={() => {
-                  const a = document.createElement('a')
-                  if (background === 'transparent') {
-                    a.href = result
-                    a.download = 'background-removed.png'
-                    a.click()
-                  } else {
-                    createImageWithBackground(result, background)
-                      .then((url) => {
-                        a.href = url
-                        a.download = 'background-removed.png'
-                        a.click()
-                      })
-                      .catch(() => {})
-                  }
-                }}
-              >
-                Download
-              </button>
-            ) : null}
-          </div>
-        </main>
-      </div>
+        </section>
+        {tasks.length > 0 ? (
+          <section className="relative container md:mt-[-50px] md:mb-4">
+            <div className="py-2 bg-white md:rounded-xl md:shadow-xl">
+              {tasks.map((task) => (
+                <TaskProcess
+                  key={task.id}
+                  task={task}
+                  onFinish={handleFinish}
+                />
+              ))}
+            </div>
+          </section>
+        ) : null}
+      </main>
     </Layout>
   )
 }

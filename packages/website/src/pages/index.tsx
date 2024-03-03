@@ -19,7 +19,7 @@ function HomepageHeader() {
           <div>
             <Link
               className="button button--primary button--lg"
-              to="/playground"
+              to="/trial"
             >
               Get started
             </Link>

@@ -14,7 +14,7 @@ const FeatureList: FeatureItem[] = [
     picture: require('@site/static/img/feature1.png').default,
     description: (
       <>
-        Elevate your images effortlessly with our advanced background removal tool. It's designed to be intuitive and versatile, supporting a wide range of AI models to meet diverse editing needs. Experience standout results quickly with our tool that emphasizes the flexibility of multiple AI model support.
+       Transform your images with ease using our sophisticated background removal tool. Intuitive and adaptable, it supports various AI models for all your editing requirements. Achieve remarkable results swiftly with our flexible and efficient solution.
       </>
     ),
   },

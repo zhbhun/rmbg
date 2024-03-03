@@ -108,7 +108,7 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0(@types/react@18.2.38)(react@18.2.0)
       '@rmbg/browser':
-        specifier: ^0.0.1
+        specifier: ^0.0.2
         version: link:../browser
       '@rmbg/model-briaai':
         specifier: ^0.0.1
