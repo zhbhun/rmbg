@@ -1,0 +1,31 @@
+[package]
+name = "rmbg-desktop"
+version = "0.0.0"
+description = "A Tauri App"
+authors = ["you"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "1", features = [] }
+
+[dependencies]
+anyhow = "1.0.81"
+futures = "0.3.30"
+image = "0.24"
+mime_guess = "2.0.4"
+ndarray = "0.15"
+ort = "2.0.0-rc.1"
+reqwest = { version = "0.12.3", features = ["json", "stream"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+show-image = { version = "0.13", features = [ "image", "raqote" ] }
+tauri = { version = "1", features = [ "fs-all", "path-all", "protocol-all", "dialog-all", "shell-open"] }
+uuid = "1.8.0"
+
+[features]
+# This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
+cuda = [ "ort/cuda" ]
+custom-protocol = ["tauri/custom-protocol"]
+load-dynamic = [ "ort/load-dynamic" ]

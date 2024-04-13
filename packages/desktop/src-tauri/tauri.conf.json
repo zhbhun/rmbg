@@ -1,0 +1,64 @@
+{
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "beforeBuildCommand": "pnpm build",
+    "devPath": "http://localhost:1420",
+    "distDir": "../dist"
+  },
+  "package": {
+    "productName": "RMBG",
+    "version": "0.0.1"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false,
+      "dialog": {
+        "all": true,
+        "ask": true,
+        "confirm": true,
+        "message": true,
+        "open": true,
+        "save": true
+      },
+      "fs": {
+        "scope": ["$HOME/**/*"],
+        "all": true
+      },
+      "path": {
+        "all": true
+      },
+      "protocol": {
+        "all": true,
+        "asset": true,
+        "assetScope": ["$HOME/**/*"]
+      },
+      "shell": {
+        "all": false,
+        "open": "^(([a-zA-Z]:\\.+)|(/\\.+)||(https?://\\w+)).+"
+      }
+    },
+    "windows": [
+      {
+        "title": "RMBG",
+        "width": 800,
+        "height": 600
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' asset: https://asset.localhost"
+    },
+    "bundle": {
+      "active": true,
+      "targets": "all",
+      "identifier": "com.zhbhun.rmbg",
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
+      "resources": ["assets"]
+    }
+  }
+}
