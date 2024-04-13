@@ -21,7 +21,7 @@
         "save": true
       },
       "fs": {
-        "scope": ["$HOME/**/*"],
+        "scope": ["$APPCACHE/**/*", "$APPCONFIG/**/*", "$DOWNLOAD/**/*"],
         "all": true
       },
       "path": {
@@ -30,7 +30,7 @@
       "protocol": {
         "all": true,
         "asset": true,
-        "assetScope": ["$HOME/**/*"]
+        "assetScope": ["$DOWNLOAD/**/*"]
       },
       "shell": {
         "all": false,

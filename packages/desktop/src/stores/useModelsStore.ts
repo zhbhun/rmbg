@@ -1,8 +1,5 @@
 import * as fs from '@tauri-apps/api/fs'
-import {
-  appCacheDir as getAppCacheDir,
-  resolveResource
-} from '@tauri-apps/api/path'
+import * as path from '@tauri-apps/api/path'
 import { listen } from '@tauri-apps/api/event'
 import { invoke } from '@tauri-apps/api/tauri'
 import { useToast } from '@/components/ui/use-toast'
@@ -196,13 +193,10 @@ export interface ModelRecord extends Model {
 }
 export async function getModelFilePath(model: Model) {
   if (!model.url) {
-    return resolveResource('./assets/u2netp.onnx')
+    return path.resolveResource('./assets/u2netp.onnx')
   }
-  const platform = useAppStore.getState().platform
-  const appCacheDir = await getAppCacheDir()
-  return `${appCacheDir}${platform === 'win32' ? '\\' : '/'}${model.name}-${
-    model.version
-  }.onnx`
+  const appCacheDir = await path.appCacheDir()
+  return path.resolve(appCacheDir, `${model.name}-${model.version}.onnx`)
 }
 
 export interface ModelsStore {

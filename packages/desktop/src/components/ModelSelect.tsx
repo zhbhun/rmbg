@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import {
   Select,
   SelectContent,
@@ -13,7 +14,11 @@ export function ModelSelect() {
     state.data.model,
     state.update
   ])
-  const models = useModelsStore((state) => state.models)
+  const allModels = useModelsStore((state) => state.models)
+  const downloadedModels = useMemo(
+    () => allModels.filter((model) => model.status === 5),
+    [allModels]
+  )
   return (
     <Select
       value={model}
@@ -26,7 +31,7 @@ export function ModelSelect() {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          {models.map((model) => (
+          {downloadedModels.map((model) => (
             <SelectItem key={model.name} value={model.name}>
               {model.title}
             </SelectItem>

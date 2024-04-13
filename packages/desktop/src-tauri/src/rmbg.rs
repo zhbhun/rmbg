@@ -6,7 +6,6 @@ use std::{fs, ops::Mul, path};
 use tauri::api::path::download_dir;
 
 fn get_unique_file_path<P: AsRef<path::Path>>(path: P) -> Result<path::PathBuf> {
-    println!("path {}", path.as_ref().display());
     let mut count = 0;
     let input_path_buf = path.as_ref().to_path_buf();
     let mut output_path_buf = path.as_ref().to_path_buf();
@@ -63,13 +62,6 @@ pub fn process_image(input: &str, model: &str, resolution: u32) -> Result<String
 
     let model_width = resolution;
     let model_height = resolution;
-
-    println!("input: {:?}", model_input);
-    println!("output: {:?}", model_output);
-    println!(
-        "input dimensions: {:?}",
-        model_input.input_type.tensor_dimensions()
-    );
 
     let input_path = path::Path::new(input);
     let input_file = image::open(input_path).unwrap();

@@ -39,6 +39,7 @@ export function Records({ className }: RecordsProps) {
   const images = useRecordsStore((state) => state.images)
 
   const [previewIndex, setPreviewIndex] = useState(-1)
+  const [previewMode, setPreviewMode] = useState(true)
   useEffect(() => {
     if (previewIndex < 0) {
       let dispose: (() => void) | undefined
@@ -111,14 +112,18 @@ export function Records({ className }: RecordsProps) {
                   <TableRow
                     key={image.input}
                     className="cursor-pointer even:bg-muted"
-                    onClick={() => {
-                      setPreviewIndex(index)
-                    }}
                   >
                     <TableCell className="text-center">
                       {STATUS_ICONS[image.status]}
                     </TableCell>
-                    <TableCell>
+                    <TableCell
+                      onClick={(event) => {
+                        event.preventDefault()
+                        event.stopPropagation()
+                        setPreviewIndex(index)
+                        setPreviewMode(false)
+                      }}
+                    >
                       <div
                         className="group relative flex items-center w-full pr-5 whitespace-nowrap overflow-hidden"
                         title={image.input}
@@ -144,7 +149,14 @@ export function Records({ className }: RecordsProps) {
                         />
                       </div>
                     </TableCell>
-                    <TableCell>
+                    <TableCell
+                      onClick={(event) => {
+                        event.preventDefault()
+                        event.stopPropagation()
+                        setPreviewIndex(index)
+                        setPreviewMode(true)
+                      }}
+                    >
                       <div
                         className="group relative flex items-center w-full pr-5 whitespace-nowrap overflow-hidden"
                         title={image.output ?? ''}
@@ -197,6 +209,7 @@ export function Records({ className }: RecordsProps) {
       <Previewer
         open={previewIndex >= 0}
         initiateIndex={previewIndex}
+        initialMode={previewMode}
         images={images}
         onClose={() => {
           setPreviewIndex(-1)

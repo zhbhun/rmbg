@@ -8,6 +8,7 @@ import classes from './Previewer.module.scss'
 export interface PreviewerProps {
   open: boolean
   initiateIndex: number
+  initialMode: boolean
   images: Array<{
     input: string
     output?: string
@@ -18,17 +19,18 @@ export interface PreviewerProps {
 export function Previewer({
   open,
   initiateIndex,
+  initialMode,
   images,
   onClose
 }: PreviewerProps) {
   const [previewIndex, setPreviewIndex] = useState(initiateIndex)
+  const [previewMode, setPreviewMode] = useState(initialMode)
   useEffect(() => {
     if (open) {
       setPreviewIndex(initiateIndex)
+      setPreviewMode(initialMode)
     }
-  }, [open, initiateIndex])
-
-  const [previewMode, setPreviewMode] = useState(true)
+  }, [open, initiateIndex, initialMode])
 
   return (
     <PhotoSlider
