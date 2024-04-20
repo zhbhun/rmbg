@@ -5,7 +5,6 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { useToast } from '@/components/ui/use-toast'
 import { useEffect } from 'react'
 import { create } from 'zustand'
-import useAppStore from './useAppStore'
 import { useConfigStore } from './useConfigStore'
 
 export interface Model {
