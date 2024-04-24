@@ -41,9 +41,9 @@ importers:
       '@rmbg/model-briaai':
         specifier: workspace:*
         version: link:../model-briaai
-      '@rmbg/model-general':
+      '@rmbg/model-modnet':
         specifier: workspace:*
-        version: link:../model-general
+        version: link:../model-modnet
       '@rmbg/model-silueta':
         specifier: workspace:*
         version: link:../model-silueta
@@ -201,8 +201,6 @@ importers:
 
   packages/model-briaai: {}
 
-  packages/model-general: {}
-
   packages/model-isnet-anime: {}
 
   packages/model-modnet: {}
@@ -233,12 +231,12 @@ importers:
       '@rmbg/model-briaai':
         specifier: workspace:*
         version: link:../model-briaai
-      '@rmbg/model-general':
-        specifier: workspace:*
-        version: link:../model-general
       '@rmbg/model-isnet-anime':
         specifier: workspace:*
         version: link:../model-isnet-anime
+      '@rmbg/model-modnet':
+        specifier: workspace:*
+        version: link:../model-modnet
       '@rmbg/model-silueta':
         specifier: workspace:*
         version: link:../model-silueta

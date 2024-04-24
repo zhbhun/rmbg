@@ -8,10 +8,10 @@ const config: Config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://zhbhun.github.io',
+  url: 'https://rmbg.fun',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/rmbg/',
+  baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -74,6 +74,10 @@ const config: Config = {
           label: 'Document'
         },
         {
+          href: '/download',
+          label: 'Download'
+        },
+        {
           href: 'https://github.com/zhbhun/rmbg',
           label: 'GitHub',
           position: 'right'
@@ -108,10 +112,6 @@ const config: Config = {
         {
           title: 'More',
           items: [
-            {
-              label: 'Document',
-              to: '/docs'
-            },
             {
               label: 'GitHub',
               href: 'https://github.com/zhbhun/rmbg'

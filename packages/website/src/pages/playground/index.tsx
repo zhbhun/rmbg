@@ -7,7 +7,7 @@ import rmbg from '@rmbg/browser'
 import {
   type RMBGModel,
   createBriaaiModel,
-  createGeneralModel,
+  createModnetModel,
   createSiluetaModel,
   createU2netpModel
 } from '@rmbg/browser/models'
@@ -21,6 +21,22 @@ interface ModelOption {
 
 const models: ModelOption[] = [
   {
+    label: 'U2netp',
+    value: createU2netpModel(
+      process.env.NODE_ENV === 'development'
+        ? '/node_modules/@rmbg/model-u2netp/'
+        : undefined
+    )
+  },
+  {
+    label: 'Modnet',
+    value: createModnetModel(
+      process.env.NODE_ENV === 'development'
+        ? '/node_modules/@rmbg/model-modnet/'
+        : undefined
+    )
+  },
+  {
     label: 'Briaai',
     value: createBriaaiModel(
       process.env.NODE_ENV === 'development'
@@ -29,26 +45,10 @@ const models: ModelOption[] = [
     )
   },
   {
-    label: 'General',
-    value: createGeneralModel(
-      process.env.NODE_ENV === 'development'
-        ? '/node_modules/@rmbg/model-general/'
-        : undefined
-    )
-  },
-  {
     label: 'Silueta',
     value: createSiluetaModel(
       process.env.NODE_ENV === 'development'
         ? '/node_modules/@rmbg/model-silueta/'
-        : undefined
-    )
-  },
-  {
-    label: 'U2netp',
-    value: createU2netpModel(
-      process.env.NODE_ENV === 'development'
-        ? '/node_modules/@rmbg/model-u2netp/'
         : undefined
     )
   }
@@ -240,17 +240,11 @@ export default function App(): JSX.Element {
       description="Description will go into a meta tag in <head />"
     >
       <main className="grow">
-        <section
-          className="relative h-[600px] md:h-[400px] lg:h-[500px]"
-          style={{
-            backgroundImage:
-              'linear-gradient(rgba(255, 255, 255), rgb(254, 248, 232))'
-          }}
-        >
+        <section className="relative h-[700px] md:h-[500px] lg:h-[600px]">
           <div className="container flex flex-col md:flex-row md:justify-between md:items-center md:h-full">
             <div className="relative flex flex-col justify-bewteen h-[300px] pt-6 md:w-[300px] lg:w-[400px]">
               <img
-                className="absolute bottom-0 right-[-50px] w-full max-w-[400px] opacity-20 sm:max-w-[500px] md:w-ful md:left-[-50px] md:right-auto md:bottom-[-10px] lg:left-0"
+                className="absolute bottom-[-30px] right-[-50px] w-full max-w-[400px] opacity-50 sm:max-w-[500px] md:w-ful md:left-[-50px] md:right-auto lg:left-0"
                 src="/static/img/hero.png"
               />
               <Heading as="h1" className="text-neutral-700">
@@ -260,7 +254,7 @@ export default function App(): JSX.Element {
                 Automatically and zero cost.
               </p>
             </div>
-            <div className="relative flex flex-col justify-center items-center my-[25px] h-[250px] bg-[rgba(255,255,255,0.25)] rounded-lg shadow-lg backdrop-blur md:flex-1 md:mx-[20px] lg:mx-[50px]">
+            <div className="relative flex flex-col justify-center items-center mt-[50px] mb-[25px] h-[300px] bg-[rgba(255,255,255,0.25)] rounded-lg shadow-lg backdrop-blur md:flex-1 md:mx-[20px] lg:mx-[50px]">
               <AddPhotoIcon className="w-16 h-16" fill="#404040" />
               <div className="mt-4 text-lg text-neutral-700 font-semibold">
                 Upload you files here

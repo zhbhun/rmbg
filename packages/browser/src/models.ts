@@ -21,26 +21,16 @@ export function createBriaaiModel(
   }
 }
 
-export function createGeneralModel(
-  publicPath = 'https://unpkg.com/@rmbg/model-general@0.0.1/'
+export function createModnetModel(
+  publicPath = 'https://unpkg.com/@rmbg/model-modnet@0.0.1/'
 ): RMBGModel {
   return {
-    name: 'general',
-    files: [
-      'general-1.onnx',
-      'general-2.onnx',
-      'general-3.onnx',
-      'general-4.onnx',
-      'general-5.onnx',
-      'general-6.onnx',
-      'general-7.onnx',
-      'general-8.onnx',
-      'general-9.onnx'
-    ],
+    name: 'modnet',
+    files: ['modnet-1.onnx', 'modnet-2.onnx', 'modnet-3.onnx'],
     mime: 'application/octet-stream',
     publicPath,
-    resolution: 1024,
-    size: 88188479
+    resolution: 512,
+    size: 25888640
   }
 }
 

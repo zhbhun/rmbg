@@ -5,7 +5,7 @@ import rmbg from '@rmbg/browser'
 import {
   type RMBGModel,
   createBriaaiModel,
-  createGeneralModel,
+  createModnetModel,
   createSiluetaModel,
   createU2netpModel
 } from '@rmbg/browser/models'
@@ -25,18 +25,26 @@ interface ModelOption {
 
 const models: ModelOption[] = [
   {
-    label: 'Briaai',
-    value: createBriaaiModel(
+    label: 'U2netp',
+    value: createU2netpModel(
       process.env.NODE_ENV === 'development'
-        ? '/node_modules/@rmbg/model-briaai/'
+        ? '/node_modules/@rmbg/model-u2netp/'
         : undefined
     )
   },
   {
-    label: 'General',
-    value: createGeneralModel(
+    label: 'Modnet',
+    value: createModnetModel(
       process.env.NODE_ENV === 'development'
-        ? '/node_modules/@rmbg/model-general/'
+        ? '/node_modules/@rmbg/model-modnet/'
+        : undefined
+    )
+  },
+  {
+    label: 'Briaai',
+    value: createBriaaiModel(
+      process.env.NODE_ENV === 'development'
+        ? '/node_modules/@rmbg/model-briaai/'
         : undefined
     )
   },
@@ -47,19 +55,11 @@ const models: ModelOption[] = [
         ? '/node_modules/@rmbg/model-silueta/'
         : undefined
     )
-  },
-  {
-    label: 'U2netp',
-    value: createU2netpModel(
-      process.env.NODE_ENV === 'development'
-        ? '/node_modules/@rmbg/model-u2netp/'
-        : undefined
-    )
   }
 ]
 
 const images = [
-  'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=1024',
+  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1024',
   'https://images.unsplash.com/photo-1623006772851-a8bf2c47d304?q=80&w=1024',
   'https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=1024',
   'https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?q=80&w=1024',
@@ -202,6 +202,7 @@ export default function Playground(): JSX.Element {
               <div
                 className="flex flex-col justify-center items-center w-full h-full"
                 style={{
+                  backgroundColor: 'white',
                   backgroundImage:
                     'repeating-conic-gradient(#f5f2fa 0 25%,#0000 0 50%)',
                   backgroundSize: '28px 28px'

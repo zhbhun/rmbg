@@ -1,15 +1,17 @@
 import { useRef } from 'react'
 import rmbg from '@rmbg/browser'
 import {
-  createGeneralModel,
+  createModnetModel,
   createSiluetaModel,
-  createBriaaiModel
+  createBriaaiModel,
+  createU2netpModel
 } from '../src/models'
 
 const models: any = {
-  general: createGeneralModel('/node_modules/@rmbg/model-general/'),
+  modnet: createModnetModel('/node_modules/@rmbg/model-modnet/'),
   silueta: createSiluetaModel('/node_modules/@rmbg/model-silueta/'),
-  briaai: createBriaaiModel('/node_modules/@rmbg/model-briaai/')
+  briaai: createBriaaiModel('/node_modules/@rmbg/model-briaai/'),
+  u2netp: createU2netpModel('/node_modules/@rmbg/model-u2netp/')
 }
 
 function App() {
@@ -51,9 +53,10 @@ function App() {
       <div>
         <div>
           <select ref={modelRef} name="model" onChange={handleGenerate}>
-            <option value="general">general</option>
+            <option value="modnet">modnet</option>
             <option value="silueta">silueta</option>
             <option value="briaai">briaai</option>
+            <option value="u2netp">u2netp</option>
           </select>
           <input ref={fileRef} type="file" onChange={handleGenerate} />
           <div ref={logRef} />
