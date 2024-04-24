@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_rmbg_website=self.webpackChunk_rmbg_website||[]).push([[664],{7876:e=>{e.exports=JSON.parse('{"title":"Development","slug":"/category/development","permalink":"/docs/category/development","navigation":{"previous":{"title":"Desktop","permalink":"/docs/tool/desktop"},"next":{"title":"Browser","permalink":"/docs/development/browser"}}}')}}]);
