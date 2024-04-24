@@ -1,8 +1,10 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Layout from '@theme/Layout'
-import WindowsIcon from '../../icons/WindowsIcon'
-import LinuxIcon from '../../icons/LinuxIcon'
 import AppleIcon from '../../icons/AppleIcon'
+import ChromeIcon from '../../icons/ChromeIcon'
+import GithubIcon from '../../icons/GithubIcon'
+import LinuxIcon from '../../icons/LinuxIcon'
+import WindowsIcon from '../../icons/WindowsIcon'
 
 const resources = [
   {
@@ -25,6 +27,21 @@ const resources = [
     title: 'macOS',
     download:
       'https://github.com/zhbhun/rmbg/releases/download/v0.0.1/RMBG_0.0.1_aarch64.dmg'
+  },
+  {
+    name: 'webapp',
+    icon: <ChromeIcon className="text-8xl" />,
+    title: 'Web',
+    download: '',
+    url: 'https://rmbg.fun/playground'
+  },
+  {
+    name: 'more',
+    icon: <GithubIcon className="text-8xl" />,
+    title: 'More',
+    download: '',
+    url: 'https://github.com/zhbhun/rmbg/releases/tag/v0.0.1',
+    target: '_blank'
   }
 ]
 
@@ -47,8 +64,9 @@ export default function Playground(): JSX.Element {
             <a
               key={index}
               className="flex flex-col items-center"
-              href={resource.download}
-              download={resource.name}
+              href={resource.download || resource.url}
+              download={resource.download ? resource.name : undefined}
+              target={resource.target}
             >
               {resource.icon}
               <div className="mt-4 text-xl">{resource.title}</div>

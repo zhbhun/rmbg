@@ -66,16 +66,17 @@ const config: Config = {
       items: [
         {
           href: '/playground',
-          label: 'Playground'
-        },
-        {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
-          label: 'Document'
+          label: 'Remove Background'
         },
         {
           href: '/download',
           label: 'Download'
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'tutorialSidebar',
+          label: 'Document',
+          position: 'right'
         },
         {
           href: 'https://github.com/zhbhun/rmbg',
