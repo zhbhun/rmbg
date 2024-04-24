@@ -245,7 +245,7 @@ export default function App(): JSX.Element {
             <div className="relative flex flex-col justify-bewteen h-[300px] pt-6 md:w-[300px] lg:w-[400px]">
               <img
                 className="absolute bottom-[-30px] right-[-50px] w-full max-w-[400px] opacity-50 sm:max-w-[500px] md:w-ful md:left-[-50px] md:right-auto lg:left-0"
-                src="/static/img/hero.png"
+                src="/img/hero.png"
               />
               <Heading as="h1" className="text-neutral-700">
                 BACKGROUND REMOVER

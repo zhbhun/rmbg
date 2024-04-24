@@ -5,14 +5,21 @@ sidebar_position: 1
 # Introduction
 
 
-![welcome](/static/img/hero.png)
+<img
+  src="/img/hero.png"
+  style={{
+    display: 'block',
+    margin: '10px auto 30px',
+    height: 300
+  }}
+/>
 
 RMBG is a versatile image background removal application that runs on multiple platforms and incorporates a variety of open-source AI models. Designed with a strong emphasis on user privacy, RMBG does not upload your files to any servers, ensuring that your data remains secure and private.
 
 ## AI-Powered Background Removal
 
 <img
-  src="/static/img/feature1.png"
+  src="/img/feature1.png"
   style={{
     display: 'block',
     margin: '10px auto 30px',
@@ -34,7 +41,7 @@ RMBG supports a variety of open-source image matting models, allowing users to s
 ## Privacy and Local Execution
 
 <img
-  src="/static/img/feature2.png"
+  src="/img/feature2.png"
   style={{
     display: 'block',
     margin: '10px auto 30px',
@@ -47,7 +54,7 @@ RMBG operates entirely locally, without uploading your images to any servers. Us
 ## Open Source and Free
 
 <img
-  src="/static/img/feature3.png"
+  src="/img/feature3.png"
   style={{
     display: 'block',
     margin: '10px auto 30px',
