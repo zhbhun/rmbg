@@ -5,11 +5,11 @@ export * from './core/config'
 async function rmbg(
   image: string,
   {
-    runtime,
+    runtime = 'https://unpkg.com/@rmbg/browser/dist/rmbg-runtime.iife.js',
     onProgress,
     ...options
   }: Omit<RMBGOptions, 'onDownload' | 'onProcess'> & {
-    runtime: string
+    runtime?: string
   }
 ): Promise<Blob> {
   return new Promise<Blob>((resolve) => {
