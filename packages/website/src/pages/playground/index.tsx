@@ -95,7 +95,7 @@ function TaskProcess({ task, onFinish }: TaskProcessProps) {
       rmbg(source, {
         model,
         onnx: {
-          publicPath: '/node_modules/onnxruntime-web/dist/'
+          publicPath: isDev ? '/node_modules/onnxruntime-web/dist/' : undefined
         },
         runtime:
           isDev

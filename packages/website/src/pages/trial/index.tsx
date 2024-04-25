@@ -91,7 +91,7 @@ export default function Playground(): JSX.Element {
       rmbg(source, {
         model,
         onnx: {
-          publicPath: '/node_modules/onnxruntime-web/dist/'
+          publicPath: isDev ? '/node_modules/onnxruntime-web/dist/' : undefined
         },
         runtime: isDev
           ? '/node_modules/@rmbg/browser/dist/rmbg-runtime.iife.js'
