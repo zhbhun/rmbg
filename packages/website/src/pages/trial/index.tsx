@@ -209,7 +209,7 @@ export default function Playground(): JSX.Element {
                 }}
               >
                 <button className="button button--primary button--lg relative">
-                  Upload an Image
+                  Select an Image
                   <input
                     type="file"
                     className="absolute inset-0 opacity-0 cursor-pointer"

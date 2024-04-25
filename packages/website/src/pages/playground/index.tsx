@@ -257,7 +257,7 @@ export default function App(): JSX.Element {
             <div className="relative flex flex-col justify-center items-center mt-[50px] mb-[25px] h-[300px] bg-[rgba(255,255,255,0.25)] rounded-lg shadow-lg backdrop-blur md:flex-1 md:mx-[20px] lg:mx-[50px]">
               <AddPhotoIcon className="w-16 h-16" fill="#404040" />
               <div className="mt-4 text-lg text-neutral-700 font-semibold">
-                Upload you files here
+                Select you files here
               </div>
               <div className="text-sm text-neutral-600">
                 Up to 20 images, max 5 MB each.
