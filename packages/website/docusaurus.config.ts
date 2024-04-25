@@ -1,6 +1,10 @@
+import dotenv from 'dotenv';
 import { themes as prismThemes } from 'prism-react-renderer'
 import type { Config } from '@docusaurus/types'
 import type * as Preset from '@docusaurus/preset-classic'
+
+dotenv.config();
+dotenv.config({ path: `.env.local`, override: true });
 
 const config: Config = {
   title: 'Background Remover',
@@ -139,7 +143,14 @@ const config: Config = {
           return postcssOptions
         }
       }
-    }
+    },
+    [
+      '@docusaurus/plugin-google-gtag',
+      {
+        trackingID: process.env.GA_ID,
+        anonymizeIP: true
+      }
+    ]
   ]
 }
 
