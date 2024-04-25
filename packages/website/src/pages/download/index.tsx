@@ -22,11 +22,11 @@ const resources = [
       'https://github.com/zhbhun/rmbg/releases/download/v0.0.1/rmbg_0.0.1_amd64.deb'
   },
   {
-    name: 'RMBG_0.0.1_aarch64.dmg',
+    name: 'RMBG_0.0.1_aarch64.dmg.zip',
     icon: <AppleIcon className="text-8xl" />,
     title: 'macOS',
     download:
-      'https://github.com/zhbhun/rmbg/releases/download/v0.0.1/RMBG_0.0.1_aarch64.dmg'
+      'https://github.com/zhbhun/rmbg/releases/download/v0.0.1/RMBG_0.0.1_aarch64.dmg.zip'
   },
   {
     name: 'webapp',

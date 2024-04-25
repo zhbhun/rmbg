@@ -6,7 +6,7 @@ sidebar_position: 2
 
 - Mac
 
-  - [Apple Silicon](https://github.com/zhbhun/rmbg/releases/download/v0.0.1/RMBG_0.0.1_aarch64.dmg)
+  - [Apple Silicon](https://github.com/zhbhun/rmbg/releases/download/v0.0.1/RMBG_0.0.1_aarch64.dmg.zip)
   - Intel: TODO
 
 - Linux
