@@ -18,6 +18,8 @@ import CloseOutlinedIcon from '../../icons/outlined/close.svg'
 import CompareOutlinedIcon from '../../icons/outlined/compare.svg'
 import { createImageWithBackground } from '../../utils/image'
 
+const isDev = process.env.NODE_ENV === 'development'
+
 interface ModelOption {
   label: string
   value: RMBGModel
@@ -27,33 +29,25 @@ const models: ModelOption[] = [
   {
     label: 'U2netp',
     value: createU2netpModel(
-      process.env.NODE_ENV === 'development'
-        ? '/node_modules/@rmbg/model-u2netp/'
-        : undefined
+      isDev ? '/node_modules/@rmbg/model-u2netp/' : undefined
     )
   },
   {
     label: 'Modnet',
     value: createModnetModel(
-      process.env.NODE_ENV === 'development'
-        ? '/node_modules/@rmbg/model-modnet/'
-        : undefined
+      isDev ? '/node_modules/@rmbg/model-modnet/' : undefined
     )
   },
   {
     label: 'Briaai',
     value: createBriaaiModel(
-      process.env.NODE_ENV === 'development'
-        ? '/node_modules/@rmbg/model-briaai/'
-        : undefined
+      isDev ? '/node_modules/@rmbg/model-briaai/' : undefined
     )
   },
   {
     label: 'Silueta',
     value: createSiluetaModel(
-      process.env.NODE_ENV === 'development'
-        ? '/node_modules/@rmbg/model-silueta/'
-        : undefined
+      isDev ? '/node_modules/@rmbg/model-silueta/' : undefined
     )
   }
 ]
@@ -99,10 +93,9 @@ export default function Playground(): JSX.Element {
         onnx: {
           publicPath: '/node_modules/onnxruntime-web/dist/'
         },
-        runtime:
-          process.env.NODE_ENV === 'development'
-            ? '/node_modules/@rmbg/browser/dist/rmbg-runtime.iife.js'
-            : undefined,
+        runtime: isDev
+          ? '/node_modules/@rmbg/browser/dist/rmbg-runtime.iife.js'
+          : undefined,
         onProgress(progress, download) {
           setProgress(progress * 100)
           if (download >= 1) {

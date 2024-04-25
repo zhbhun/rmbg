@@ -14,6 +14,8 @@ import {
 import AddPhotoIcon from '../../icons/outlined/add_photo.svg'
 import DownloadIcon from '../../icons/outlined/download.svg'
 
+const isDev = process.env.NODE_ENV === 'development'
+
 interface ModelOption {
   label: string
   value: RMBGModel
@@ -23,7 +25,7 @@ const models: ModelOption[] = [
   {
     label: 'U2netp',
     value: createU2netpModel(
-      process.env.NODE_ENV === 'development'
+      isDev
         ? '/node_modules/@rmbg/model-u2netp/'
         : undefined
     )
@@ -31,7 +33,7 @@ const models: ModelOption[] = [
   {
     label: 'Modnet',
     value: createModnetModel(
-      process.env.NODE_ENV === 'development'
+      isDev
         ? '/node_modules/@rmbg/model-modnet/'
         : undefined
     )
@@ -39,7 +41,7 @@ const models: ModelOption[] = [
   {
     label: 'Briaai',
     value: createBriaaiModel(
-      process.env.NODE_ENV === 'development'
+      isDev
         ? '/node_modules/@rmbg/model-briaai/'
         : undefined
     )
@@ -47,7 +49,7 @@ const models: ModelOption[] = [
   {
     label: 'Silueta',
     value: createSiluetaModel(
-      process.env.NODE_ENV === 'development'
+      isDev
         ? '/node_modules/@rmbg/model-silueta/'
         : undefined
     )
@@ -96,7 +98,7 @@ function TaskProcess({ task, onFinish }: TaskProcessProps) {
           publicPath: '/node_modules/onnxruntime-web/dist/'
         },
         runtime:
-          process.env.NODE_ENV === 'development'
+          isDev
             ? '/node_modules/@rmbg/browser/dist/rmbg-runtime.iife.js'
             : undefined,
         onProgress(progress, download) {
