@@ -95,7 +95,10 @@ function TaskProcess({ task, onFinish }: TaskProcessProps) {
         onnx: {
           publicPath: '/node_modules/onnxruntime-web/dist/'
         },
-        runtime: '/node_modules/@rmbg/browser/dist/rmbg-runtime.iife.js',
+        runtime:
+          process.env.NODE_ENV === 'development'
+            ? '/node_modules/@rmbg/browser/dist/rmbg-runtime.iife.js'
+            : undefined,
         onProgress(progress, download) {
           setProgress(progress * 100)
           if (download >= 1) {
