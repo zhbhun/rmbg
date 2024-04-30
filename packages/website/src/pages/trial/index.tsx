@@ -137,7 +137,7 @@ export default function Playground(): JSX.Element {
 
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
+    title="Remove Image Backgrounds for Free – Locally and with Open Source via rmbg.fun."
       description="Description will go into a meta tag in <head />"
     >
       <div className="container my-20">

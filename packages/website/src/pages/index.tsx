@@ -12,15 +12,17 @@ function HomepageHeader() {
     <header className="bg-[#fef8e8]">
       <div className="container flex flex-col justify-between items-center py-8 md:flex-row">
         <div className="py-8 flex flex-col items-center md:flex-[1] md:min-w-[300px] md:items-start">
-          <Heading as="h1" className="mb-4 text-4xl text-center font-semibold uppercase md:text-left">
+          <Heading
+            as="h1"
+            className="mb-4 text-4xl text-center font-semibold uppercase md:text-left"
+          >
             {siteConfig.title}
           </Heading>
-          <p className="mb-4 text-sm text-[#666] lg:text-xl">{siteConfig.tagline}</p>
+          <p className="mb-4 text-sm text-[#666] lg:text-xl">
+            {siteConfig.tagline}
+          </p>
           <div>
-            <Link
-              className="button button--primary button--lg"
-              to="/trial"
-            >
+            <Link className="button button--primary button--lg" to="/trial">
               Get started
             </Link>
           </div>
@@ -41,7 +43,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       wrapperClassName={styles.layout}
-      title={`Hello from ${siteConfig.title}`}
+      title="Remove Image Backgrounds for Free – Locally and with Open Source via rmbg.fun."
       description="Description will go into a meta tag in <head />"
     >
       <HomepageHeader />

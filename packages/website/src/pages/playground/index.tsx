@@ -25,33 +25,25 @@ const models: ModelOption[] = [
   {
     label: 'U2netp',
     value: createU2netpModel(
-      isDev
-        ? '/node_modules/@rmbg/model-u2netp/'
-        : undefined
+      isDev ? '/node_modules/@rmbg/model-u2netp/' : undefined
     )
   },
   {
     label: 'Modnet',
     value: createModnetModel(
-      isDev
-        ? '/node_modules/@rmbg/model-modnet/'
-        : undefined
+      isDev ? '/node_modules/@rmbg/model-modnet/' : undefined
     )
   },
   {
     label: 'Briaai',
     value: createBriaaiModel(
-      isDev
-        ? '/node_modules/@rmbg/model-briaai/'
-        : undefined
+      isDev ? '/node_modules/@rmbg/model-briaai/' : undefined
     )
   },
   {
     label: 'Silueta',
     value: createSiluetaModel(
-      isDev
-        ? '/node_modules/@rmbg/model-silueta/'
-        : undefined
+      isDev ? '/node_modules/@rmbg/model-silueta/' : undefined
     )
   }
 ]
@@ -97,10 +89,9 @@ function TaskProcess({ task, onFinish }: TaskProcessProps) {
         onnx: {
           publicPath: isDev ? '/node_modules/onnxruntime-web/dist/' : undefined
         },
-        runtime:
-          isDev
-            ? '/node_modules/@rmbg/browser/dist/rmbg-runtime.iife.js'
-            : undefined,
+        runtime: isDev
+          ? '/node_modules/@rmbg/browser/dist/rmbg-runtime.iife.js'
+          : undefined,
         onProgress(progress, download) {
           setProgress(progress * 100)
           if (download >= 1) {
@@ -241,7 +232,7 @@ export default function App(): JSX.Element {
   }, [tasks])
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
+      title="Remove Image Backgrounds for Free – Locally and with Open Source via rmbg.fun."
       description="Description will go into a meta tag in <head />"
     >
       <main className="grow">
