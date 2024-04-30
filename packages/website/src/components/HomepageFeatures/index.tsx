@@ -44,7 +44,7 @@ const FeatureList: FeatureItem[] = [
 
 function Feature({ title, picture, description }: FeatureItem) {
   return (
-    <div className="flex flex-col mb-24 md:flex-row md:items-center md:mb-30">
+    <div className="flex flex-col mb-24 md:flex-row md:items-center md:mb-30 last:mb-0">
       <div className="mb-8 text--center md:shrink-0 md:w-[300px] lg:w-[400px]">
         <img
           className={clsx(styles.featureSvg, 'inline-block')}

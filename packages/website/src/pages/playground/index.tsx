@@ -137,8 +137,8 @@ export default function Playground(): JSX.Element {
 
   return (
     <Layout
-    title="Remove Image Backgrounds for Free – Locally and with Open Source via rmbg.fun."
-      description="Description will go into a meta tag in <head />"
+      title="Remove Image Backgrounds for Free – Locally and with Open Source via rmbg.fun."
+      description="Remove image backgrounds for free, locally and securely, using the open-source tool rmbg.fun, no internet connection required."
     >
       <div className="container my-20">
         <header className="mb-6 text-center md:mb-12">
