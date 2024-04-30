@@ -14,7 +14,8 @@ const FeatureList: FeatureItem[] = [
     picture: require('@site/static/img/feature1.png').default,
     description: (
       <>
-       RMBG leverages multiple AI models to quickly and efficiently remove backgrounds from your images.
+        RMBG leverages multiple AI models to quickly and efficiently remove
+        backgrounds from your images.
       </>
     )
   },
@@ -43,15 +44,15 @@ const FeatureList: FeatureItem[] = [
 
 function Feature({ title, picture, description }: FeatureItem) {
   return (
-    <div className={clsx('col col--4')}>
-      <div className="text--center">
+    <div className="flex flex-col mb-24 md:flex-row md:items-center md:mb-30">
+      <div className="mb-8 text--center md:shrink-0 md:w-[300px] lg:w-[400px]">
         <img
           className={clsx(styles.featureSvg, 'inline-block')}
           alt={title}
           src={picture}
         />
       </div>
-      <div className="text--center padding-horiz--md">
+      <div className="text-center padding-horiz--md md:text-left">
         <Heading as="h3" className="py-2 text-xl font-bold">
           {title}
         </Heading>
@@ -63,14 +64,10 @@ function Feature({ title, picture, description }: FeatureItem) {
 
 export default function HomepageFeatures(): JSX.Element {
   return (
-    <section className={styles.features}>
-      <div className="container">
-        <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
-          ))}
-        </div>
-      </div>
-    </section>
+    <div className="container py-24">
+      {FeatureList.map((props, idx) => (
+        <Feature key={idx} {...props} />
+      ))}
+    </div>
   )
 }

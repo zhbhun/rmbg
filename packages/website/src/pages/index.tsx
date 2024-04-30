@@ -3,6 +3,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Layout from '@theme/Layout'
 import HomepageFeatures from '@site/src/components/HomepageFeatures'
 import Heading from '@theme/Heading'
+import Playground from '../components/Playground'
 
 import styles from './index.module.css'
 
@@ -39,15 +40,14 @@ function HomepageHeader() {
 }
 
 export default function Home(): JSX.Element {
-  const { siteConfig } = useDocusaurusContext()
   return (
     <Layout
       wrapperClassName={styles.layout}
       title="Remove Image Backgrounds for Free – Locally and with Open Source via rmbg.fun."
       description="Description will go into a meta tag in <head />"
     >
-      <HomepageHeader />
       <main>
+        <Playground />
         <HomepageFeatures />
       </main>
     </Layout>

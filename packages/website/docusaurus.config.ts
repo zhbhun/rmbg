@@ -35,7 +35,7 @@ const config: Config = {
     locales: ['en']
   },
 
-  staticDirectories: ['static'],
+  staticDirectories: process.env.NODE_ENV === 'development' ? ['static', '.'] : ['static'],
 
   presets: [
     [
